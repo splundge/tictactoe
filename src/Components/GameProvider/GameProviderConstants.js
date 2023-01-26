@@ -52,62 +52,10 @@ export const initializeRowColumns = (columnCount, rowCount) =>
  * @returns one player from the winners if they've won
  */
 export const getWinner = (rowCellValues, winCountCondition, players) => {
-	let verticalComboTracker = { symbol: null, count: 0 };
-	let diagonalComboTracker = { symbol: null, count: 0 };
-
-	for (let rowIndex = 0; rowIndex < rowCellValues.length; rowIndex++) {
-		const row = rowCellValues[rowIndex];
-		let horizontalComboTracker = { symbol: null, count: 0 };
-		for (let cellIndex = 0; cellIndex < row.length; cellIndex++) {
-			const cell = row[cellIndex];
-
-			horizontalComboTracker = trackHorizontalCombo(
-				cell,
-				horizontalComboTracker
-			);
-			if (horizontalComboTracker.count >= winCountCondition) {
-				return players.find(
-					(player) => player.symbol === horizontalComboTracker.symbol
-				);
-			}
-
-			verticalComboTracker = trackHorizontalCombo(cell, verticalComboTracker);
-			if (verticalComboTracker.count >= winCountCondition) {
-				return players.find(
-					(player) => player.symbol === verticalComboTracker.symbol
-				);
-			}
-
-			diagonalComboTracker = trackHorizontalCombo(cell, diagonalComboTracker);
-			if (diagonalComboTracker.count >= winCountCondition) {
-				return players.find(
-					(player) => player.symbol === diagonalComboTracker.symbol
-				);
-			}
-		}
-	}
-
+	/*
+		todo: find a winner horizontally, vertically, diagonally!
+		const winner = players[0];
+		return winner;
+	*/
 	return null;
-};
-
-const trackHorizontalCombo = (cell, { symbol, count }) => {
-	if (isNullOrUndefined(cell)) {
-		return {
-			symbol: null,
-			count: 0,
-		};
-	}
-
-	return {
-		symbol: cell,
-		count: symbol === cell ? count + 1 : 1,
-	};
-};
-
-const trackVerticalCombo = (cell, tracker) => {
-	return { symbol: null, count: 0 };
-};
-
-const trackDiagonalCombo = (cell, tracker) => {
-	return { symbol: null, count: 0 };
 };
