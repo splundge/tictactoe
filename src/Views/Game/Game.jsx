@@ -23,7 +23,7 @@ const Game = () => {
 const GameWrapper = () => (
 	<GameProvider
 		winCountCondition={3}
-		columnCount={9}
+		columnCount={3}
 		rowCount={3}
 		players={[
 			{ id: 1, name: 'Bob', symbol: 'X' },
