@@ -1,5 +1,6 @@
 import { arrayIsNullOrEmpty, isNullOrUndefined, repeat } from '../Utils';
-
+// solution 1
+import { winConditions, options} from '../AdditionalFunctions'
 /**
  * current state of the game
  */
@@ -45,17 +46,91 @@ export const initializeRowColumns = (columnCount, rowCount) =>
  * 	[
  * 		['x',  'x',  'o'],
  * 		[null, null, 'o'],
- * 		['x', 'x',   null]
+ * 		['x', 'x',   null] 
  * ]
  * @param {number} winCountCondition number of adjacent symbols required to win
  * @param {array} players [{ name: '', id: 1, symbol:'x' }]
  * @returns one player from the winners if they've won
  */
 export const getWinner = (rowCellValues, winCountCondition, players) => {
-	/*
-		todo: find a winner horizontally, vertically, diagonally!
-		const winner = players[0];
-		return winner;
-	*/
+
+	for(let x = 0; x < players.length; x++){
+		const currentPlayer = players[x];
+		if(
+			isHorizontalWinner(rowCellValues, winCountCondition, currentPlayer) ||
+			isVerticalWinner(rowCellValues, winCountCondition, currentPlayer) ||
+			isDiagonalWinner(rowCellValues, winCountCondition, currentPlayer)
+		){
+			return currentPlayer;
+		}
+	}
+
+	return null;
+}
+
+/**
+ * checks to see if the given player has n symbols in a row horizontally
+ */
+const isHorizontalWinner = (rowCellValues, winCountCondition, player) => {
+
+	for(let rowIndex = 0; rowIndex < rowCellValues.length; rowIndex++){
+		const row = rowCellValues[rowIndex];
+		let counter = 0;
+		for(let cellIndex = 0; cellIndex < row.length; cellIndex++){
+			const cell = row[cellIndex];
+			
+			if(cell === player.symbol) {
+				counter++;
+			} else {
+				counter = 0;
+			}
+
+			if(counter >= winCountCondition){
+				return true;
+			}
+		}
+	}
+
 	return null;
 };
+
+/**
+ * checks to see if the given player has n symbols in a row vertically
+ */
+const isVerticalWinner = (rowCellValues, winCountCondition, player) => {
+
+	for(let rowIndex = 0; rowIndex < rowCellValues.length; rowIndex++){
+		const row = rowCellValues[rowIndex];
+		let counter = 0;
+		let tempArray = []
+		for(let cellIndex = 0; cellIndex < row.length; cellIndex++){
+			const cell = row[cellIndex];	
+			if(cell === player.symbol) {
+				counter++;
+				tempArray.push(row)
+				console.log(tempArray)
+			};
+
+			if(counter >= winCountCondition){
+				return true;
+			}
+		}
+	}
+
+	return null;
+};
+
+/**
+ * checks to see if the given player has n symbols in a row diagonally
+ */
+const isDiagonalWinner = (rowCellValues, winCountCondition, player) => {
+	return false;
+};
+
+
+
+
+
+
+
+

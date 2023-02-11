@@ -48,6 +48,7 @@ const GameProvider = ({
 		setGameState,
 		setLastWinningPlayer,
 		setRowCellValues,
+		players,
 	]);
 
 	const handleReset = useCallback(() => {
